@@ -1,15 +1,11 @@
 const express = require('express');
-const bodyParser = require('body-parser');
+require('./db/mongoose');
+const userRouter = require('./routers/user');
 
 const app = express();
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/api/hello', (req, res) => {
-  res.send({ express: 'Hello' });
-});
+app.use(express.json());
+app.use(userRouter);
 
-app.listen(process.env.PORT || 8080, () => {
-  console.log('now listening');
-});
+module.exports = app;
