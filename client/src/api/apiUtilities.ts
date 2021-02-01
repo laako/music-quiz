@@ -1,5 +1,5 @@
 // disable prettier
-const options = {
+const options: any = {
     mode: 'cors', // no-cors, *cors, same-origin
     cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
     credentials: 'same-origin', // include, *same-origin, omit
@@ -10,8 +10,13 @@ const options = {
     referrerPolicy: 'no-referrer',
 };
 
+type credentials = {
+    username: string;
+    password: string;
+};
+
 const ApiUtils = {
-    async login(credentials) {
+    async login(credentials: credentials) {
         return await fetch('/user/login', {
             ...options,
             method: 'POST',
@@ -24,7 +29,7 @@ const ApiUtils = {
                 return null;
             });
     },
-    async createUser(credentials) {
+    async createUser(credentials: credentials) {
         return await fetch('/user', {
             ...options,
             method: 'POST',
@@ -37,8 +42,7 @@ const ApiUtils = {
                 return null;
             });
     },
-    logout({ username, token }) {},
-    async post(url, data) {
+    async post(url: string, data: object) {
         return await fetch(url, {
             ...options,
             method: 'POST',
@@ -51,7 +55,7 @@ const ApiUtils = {
                 return null;
             });
     },
-    async get(url, data) {
+    async get(url: string, data: object) {
         return await fetch(url, {
             ...options,
             body: data ? JSON.stringify(data) : undefined,
