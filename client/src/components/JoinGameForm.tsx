@@ -1,12 +1,12 @@
 import { Button, TextField } from '@material-ui/core';
 import { useState } from 'react';
 
-const LoginForm = () => {
+const JoinGameForm = () => {
+    const [roomcode, setRoomcode] = useState<string | null>(null);
     const [username, setUsername] = useState<string | null>(null);
-    const [password, setPassword] = useState<string | null>(null);
     const submit = (e: React.FormEvent) => {
         e.preventDefault();
-        if (username && password) {
+        if (username && roomcode) {
             console.log('jes');
         } else {
             console.log('not jes');
@@ -23,12 +23,11 @@ const LoginForm = () => {
                 onChange={(e) => setUsername(e.target.value)}
             />
             <TextField
-                name="password"
-                type="password"
-                label="Password"
+                name="roomcode"
+                label="Roomcode"
                 variant="outlined"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                value={roomcode}
+                onChange={(e) => setRoomcode(e.target.value)}
             />
             <Button color="primary" type="submit" variant="contained">
                 Submit
@@ -37,4 +36,4 @@ const LoginForm = () => {
     );
 };
 
-export default LoginForm;
+export default JoinGameForm;

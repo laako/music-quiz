@@ -19,6 +19,9 @@ const useStyles = makeStyles((theme) => ({
             color: 'inherit',
         },
     },
+    button: {
+        width: 'auto',
+    },
 }));
 
 const TopBar = () => {
@@ -34,6 +37,7 @@ const TopBar = () => {
                         </Link>
                     </Typography>
                     <Button
+                        className={classes.button}
                         variant="text"
                         onClick={() => history.push('/login')}
                     >
