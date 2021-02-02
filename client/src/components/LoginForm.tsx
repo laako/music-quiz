@@ -1,15 +1,25 @@
-import { Button, TextField } from '@material-ui/core';
+import { Button, CircularProgress, TextField } from '@material-ui/core';
 import { useState } from 'react';
 
+import ApiUtils from '../api/api';
+
 const LoginForm = () => {
-    const [username, setUsername] = useState<string | null>(null);
-    const [password, setPassword] = useState<string | null>(null);
+    const [username, setUsername] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
+    const [submitting, setSubmitting] = useState<boolean>(false);
+
     const submit = (e: React.FormEvent) => {
         e.preventDefault();
+        setSubmitting(true);
         if (username && password) {
-            console.log('jes');
+            ApiUtils.post('/user/login', {
+                username,
+                password,
+            })
+                .then((res) => {})
+                .catch((err) => {});
         } else {
-            console.log('not jes');
+            setSubmitting(false);
         }
     };
 
@@ -31,7 +41,11 @@ const LoginForm = () => {
                 onChange={(e) => setPassword(e.target.value)}
             />
             <Button color="primary" type="submit" variant="contained">
-                Submit
+                {submitting ? (
+                    <CircularProgress color="secondary" size={24} />
+                ) : (
+                    'Login'
+                )}
             </Button>
         </form>
     );

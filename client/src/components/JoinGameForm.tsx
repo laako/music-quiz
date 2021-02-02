@@ -2,9 +2,12 @@ import { Button, TextField } from '@material-ui/core';
 import { useState } from 'react';
 
 const JoinGameForm = () => {
-    const [roomcode, setRoomcode] = useState<string | null>(null);
-    const [username, setUsername] = useState<string | null>(null);
-    const submit = (e: React.FormEvent) => {
+    const [roomcode, setRoomcode] = useState<string>('');
+    const [username, setUsername] = useState<string>('');
+    const [submitting, setSubmitting] = useState<boolean>(false);
+
+    const submit = async (e: React.FormEvent) => {
+        setSubmitting(true);
         e.preventDefault();
         if (username && roomcode) {
             console.log('jes');
@@ -30,7 +33,7 @@ const JoinGameForm = () => {
                 onChange={(e) => setRoomcode(e.target.value)}
             />
             <Button color="primary" type="submit" variant="contained">
-                Submit
+                {'Submit'}
             </Button>
         </form>
     );

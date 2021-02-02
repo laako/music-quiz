@@ -34,6 +34,9 @@ const theme = createMuiTheme({
             root: {
                 width: '100%',
                 marginBottom: '1rem',
+                '&:last-child': {
+                    marginBottom: '0',
+                },
             },
         },
     },
