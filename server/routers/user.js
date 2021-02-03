@@ -10,13 +10,14 @@ router.post('/user/login', async (req, res) => {
             req.body.password,
         );
         const token = await user.generateAuthToken();
-        const cookie = req.cookies.mqCk;
-        if (!cookie) {
-            res.cookie('mqCk', token, {
-                maxAge: 900000,
-                httpOnly: true,
-            });
-        }
+        // TODO: Delete old cookie if found I guess
+        // const cookie = req.cookies.mqCk;
+        // if (!cookie) {
+        res.cookie('mqCk', token, {
+            maxAge: 900000,
+            httpOnly: true,
+        });
+        // }
         res.json({
             user,
             token,
@@ -45,7 +46,7 @@ router.post('/user/logout', auth, async (req, res) => {
         });
         await req.user.save();
 
-        res.send();
+        res.json({});
     } catch (e) {
         res.status(500).send();
     }

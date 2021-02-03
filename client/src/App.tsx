@@ -1,12 +1,15 @@
+import { useState } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import { Container, CssBaseline } from '@material-ui/core';
+
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import JoinPage from './pages/JoinPage';
 import NotFoundPage from './pages/NotFoundPage';
-import { Container, CssBaseline } from '@material-ui/core';
-
 import TopBar from './components/TopBar';
+
+import UserContext from './context/UserContext';
 
 const theme = createMuiTheme({
     palette: {
@@ -43,21 +46,25 @@ const theme = createMuiTheme({
 });
 
 const App = () => {
+    const [user, setUser] = useState<any | null>(null);
+
     return (
-        <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <BrowserRouter>
-                <TopBar />
-                <Container maxWidth="sm">
-                    <Switch>
-                        <Route path="/" exact component={HomePage} />
-                        <Route path="/login" component={LoginPage} />
-                        <Route path="/join" component={JoinPage} />
-                        <Route path="*" component={NotFoundPage} />
-                    </Switch>
-                </Container>
-            </BrowserRouter>
-        </ThemeProvider>
+        <UserContext.Provider value={{ user, setUser }}>
+            <ThemeProvider theme={theme}>
+                <CssBaseline />
+                <BrowserRouter>
+                    <TopBar />
+                    <Container maxWidth="sm">
+                        <Switch>
+                            <Route path="/" exact component={HomePage} />
+                            <Route path="/login" component={LoginPage} />
+                            <Route path="/join" component={JoinPage} />
+                            <Route path="*" component={NotFoundPage} />
+                        </Switch>
+                    </Container>
+                </BrowserRouter>
+            </ThemeProvider>
+        </UserContext.Provider>
     );
 };
 

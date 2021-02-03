@@ -1,9 +1,13 @@
 import { Button, CircularProgress, TextField } from '@material-ui/core';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { Redirect } from 'react-router-dom';
 
 import ApiUtils from '../api/api';
+import UserContext from '../context/UserContext';
+import { UserContextType } from '../models/user';
 
 const LoginForm = () => {
+    const { user, setUser } = useContext(UserContext) as UserContextType;
     const [username, setUsername] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [submitting, setSubmitting] = useState<boolean>(false);
@@ -16,12 +20,16 @@ const LoginForm = () => {
                 username,
                 password,
             })
-                .then((res) => {})
+                .then((res) => {
+                    setUser(res);
+                })
                 .catch((err) => {});
         } else {
             setSubmitting(false);
         }
     };
+
+    if (user) return <Redirect to="/" />;
 
     return (
         <form onSubmit={submit}>

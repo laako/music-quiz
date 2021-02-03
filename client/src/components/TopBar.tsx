@@ -5,7 +5,11 @@ import {
     Toolbar,
     Typography,
 } from '@material-ui/core';
+import { useContext } from 'react';
 import { Link, useHistory, withRouter } from 'react-router-dom';
+import ApiUtils from '../api/api';
+import UserContext from '../context/UserContext';
+import { UserContextType } from '../models/user';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -25,8 +29,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const TopBar = () => {
+    const { user, setUser } = useContext(UserContext) as UserContextType;
     const history = useHistory();
     const classes = useStyles();
+
+    const logout = async () => {
+        await ApiUtils.post('/user/logout', user).then((res) => {
+            setUser(null);
+        });
+    };
     return (
         <div className={classes.root}>
             <AppBar position="static">
@@ -36,13 +47,23 @@ const TopBar = () => {
                             Musavisa
                         </Link>
                     </Typography>
-                    <Button
-                        className={classes.button}
-                        variant="text"
-                        onClick={() => history.push('/login')}
-                    >
-                        Login
-                    </Button>
+                    {!user ? (
+                        <Button
+                            className={classes.button}
+                            variant="text"
+                            onClick={() => history.push('/login')}
+                        >
+                            Login
+                        </Button>
+                    ) : (
+                        <Button
+                            className={classes.button}
+                            variant="text"
+                            onClick={logout}
+                        >
+                            Logout
+                        </Button>
+                    )}
                 </Toolbar>
             </AppBar>
         </div>

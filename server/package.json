@@ -17,6 +17,6 @@
     "scripts": {
         "server": "nodemon index.js",
         "db": "/Users/saku.laakso/mongodb/bin/mongod --dbpath=/Users/saku.laakso/mongodb-data",
-        "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\" \"npm run db\""
+        "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run db\""
     }
 }

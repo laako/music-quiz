@@ -1,4 +1,3 @@
-// disable prettier
 const options: any = {
     mode: 'cors', // no-cors, *cors, same-origin
     cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -22,16 +21,12 @@ const ApiUtils = {
                 throw new Error(err);
             });
     },
-    async post(url: string, data: object) {
+    async post(url: string, data?: object) {
         return await fetch(url, {
             ...options,
             method: 'POST',
             body: JSON.stringify(data),
-        })
-            .then((res) => res.json())
-            .catch((err) => {
-                throw new Error(err);
-            });
+        }).then((res) => res.json());
     },
 };
 

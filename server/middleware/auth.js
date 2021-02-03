@@ -5,7 +5,7 @@ const auth = async (req, res, next) => {
     try {
         const token = req.cookies.mqCk;
         if (!token) {
-            throw new Error()
+            throw new Error();
         }
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         const user = await User.findOne({
