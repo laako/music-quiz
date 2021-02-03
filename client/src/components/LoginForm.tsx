@@ -21,7 +21,7 @@ const LoginForm = () => {
                 password,
             })
                 .then((res) => {
-                    setUser(res);
+                    setUser(res.user);
                 })
                 .catch((err) => {});
         } else {

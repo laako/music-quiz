@@ -10,11 +10,10 @@ const options: any = {
 };
 
 const ApiUtils = {
-    async get(url: string, data: object) {
+    async get(url: string) {
         return await fetch(url, {
             ...options,
             method: 'GET',
-            body: JSON.stringify(data),
         })
             .then((res) => res.json())
             .catch((err) => {

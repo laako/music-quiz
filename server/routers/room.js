@@ -23,14 +23,38 @@ router.post('/room/create', auth, async (req, res) => {
 
     try {
         await room.save();
-        res.status(201).send(room);
+        res.status(201).json({
+            author: room.author,
+            roomcode,
+        });
     } catch (e) {
-        console.log(e);
         res.status(400).send(e);
     }
 });
 
-router.post('/room/destroy', auth, async (req, res) => {});
+router.post('/room/destroy/:id', auth, async (req, res) => {
+    const deleted = await Room.deleteOne({
+        author: req.user.username,
+        roomcode: req.params.id,
+    });
+    if (deleted.deletedCount !== 0) {
+        res.json({});
+    } else {
+        res.status(403).send();
+    }
+});
+
+router.get('/room', auth, async (req, res) => {
+    const roomsByYou = await Room.find({
+        author: req.user.username,
+    });
+
+    if (!roomsByYou) {
+        res.status(404).json([]);
+    }
+
+    res.json(roomsByYou);
+});
 
 router.get('/room/:code', async (req, res) => {
     const roomcode = req.params.code;
@@ -40,7 +64,7 @@ router.get('/room/:code', async (req, res) => {
             roomcode,
         });
 
-        if (!room) res.status(201).send();
+        if (!room) res.status(404).send();
 
         res.send(room);
     } catch (e) {

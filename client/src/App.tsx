@@ -7,6 +7,8 @@ import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import JoinPage from './pages/JoinPage';
 import NotFoundPage from './pages/NotFoundPage';
+import ProfilePage from './pages/ProfilePage';
+import PrivateRoute from './components/PrivateRoute';
 import TopBar from './components/TopBar';
 
 import UserContext from './context/UserContext';
@@ -59,6 +61,10 @@ const App = () => {
                             <Route path="/" exact component={HomePage} />
                             <Route path="/login" component={LoginPage} />
                             <Route path="/join" component={JoinPage} />
+                            <PrivateRoute
+                                path="/profile"
+                                component={ProfilePage}
+                            />
                             <Route path="*" component={NotFoundPage} />
                         </Switch>
                     </Container>

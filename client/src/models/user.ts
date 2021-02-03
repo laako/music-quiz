@@ -1,9 +1,9 @@
-type User = {
-    user: any;
-    token: string;
+type UserType = {
+    username: string;
+    _id: string;
 };
 
 export type UserContextType = {
-    user: User;
-    setUser: React.Dispatch<User | null>;
+    user: UserType;
+    setUser: React.Dispatch<UserType | null>;
 };

@@ -1,12 +1,26 @@
-import { Box, Button, Typography } from '@material-ui/core';
-import { useContext } from 'react';
+import { Box, Button, CircularProgress, Typography } from '@material-ui/core';
+import { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import ApiUtils from '../api/api';
 import UserContext from '../context/UserContext';
 import { UserContextType } from '../models/user';
 
 const HomePage: React.FC = () => {
     const { user } = useContext(UserContext) as UserContextType;
     const history = useHistory();
+    const [loading, setLoading] = useState<boolean>(false);
+
+    const createGame = () => {
+        setLoading(true);
+        ApiUtils.post('/room/create')
+            .then((res) => {
+                console.log(res);
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+    };
+
     return (
         <>
             <Typography paragraph>
@@ -16,10 +30,14 @@ const HomePage: React.FC = () => {
                 <Button
                     variant="contained"
                     color="primary"
-                    onClick={() => history.push('create')}
+                    onClick={createGame}
                     disabled={!user}
                 >
-                    Create game
+                    {loading ? (
+                        <CircularProgress color="secondary" size={24} />
+                    ) : (
+                        'Create game'
+                    )}
                 </Button>
             </Box>
             <Box>

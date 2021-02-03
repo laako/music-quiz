@@ -29,15 +29,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const TopBar = () => {
-    const { user, setUser } = useContext(UserContext) as UserContextType;
+    const { user } = useContext(UserContext) as UserContextType;
     const history = useHistory();
     const classes = useStyles();
 
-    const logout = async () => {
-        await ApiUtils.post('/user/logout', user).then((res) => {
-            setUser(null);
-        });
-    };
     return (
         <div className={classes.root}>
             <AppBar position="static">
@@ -59,9 +54,9 @@ const TopBar = () => {
                         <Button
                             className={classes.button}
                             variant="text"
-                            onClick={logout}
+                            onClick={() => history.push('/profile')}
                         >
-                            Logout
+                            Profile
                         </Button>
                     )}
                 </Toolbar>
