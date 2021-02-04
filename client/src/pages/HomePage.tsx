@@ -2,23 +2,25 @@ import { Box, Button, CircularProgress, Typography } from '@material-ui/core';
 import { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import ApiUtils from '../api/api';
+import RoomContext from '../context/RoomContext';
 import UserContext from '../context/UserContext';
 import { UserContextType } from '../models/user';
+import { RoomContextType } from '../models/room';
 
 const HomePage: React.FC = () => {
     const { user } = useContext(UserContext) as UserContextType;
+    const { setRoom } = useContext(RoomContext) as RoomContextType;
     const history = useHistory();
     const [loading, setLoading] = useState<boolean>(false);
 
     const createGame = () => {
         setLoading(true);
-        ApiUtils.post('/room/create')
-            .then((res) => {
-                console.log(res);
-            })
-            .finally(() => {
-                setLoading(false);
-            });
+        ApiUtils.post('/room/create').then((res) => {
+            if (res.roomcode) {
+                setRoom(res);
+                history.push(`/room/${res.roomcode}`);
+            }
+        });
     };
 
     return (
@@ -31,7 +33,7 @@ const HomePage: React.FC = () => {
                     variant="contained"
                     color="primary"
                     onClick={createGame}
-                    disabled={!user}
+                    disabled={!user || loading}
                 >
                     {loading ? (
                         <CircularProgress color="secondary" size={24} />

@@ -7,7 +7,6 @@ import {
 } from '@material-ui/core';
 import { useContext } from 'react';
 import { Link, useHistory, withRouter } from 'react-router-dom';
-import ApiUtils from '../api/api';
 import UserContext from '../context/UserContext';
 import { UserContextType } from '../models/user';
 

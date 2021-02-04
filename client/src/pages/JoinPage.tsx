@@ -1,7 +1,7 @@
 import { Typography } from '@material-ui/core';
 import JoinGameForm from '../components/JoinGameForm';
 
-const JoinPage = () => {
+const JoinPage: React.FC = () => {
     return (
         <>
             <Typography variant="h2" component="h2">

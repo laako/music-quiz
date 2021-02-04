@@ -1,6 +1,7 @@
 import { Typography } from '@material-ui/core';
 import LoginForm from '../components/LoginForm';
-const LoginPage = () => {
+
+const LoginPage: React.FC = () => {
     return (
         <>
             <Typography variant="h2" component="h2">

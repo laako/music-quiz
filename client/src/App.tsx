@@ -12,6 +12,10 @@ import PrivateRoute from './components/PrivateRoute';
 import TopBar from './components/TopBar';
 
 import UserContext from './context/UserContext';
+import RoomPage from './pages/RoomPage';
+import RoomContext from './context/RoomContext';
+import { UserType } from './models/user';
+import { RoomType } from './models/room';
 
 const theme = createMuiTheme({
     palette: {
@@ -47,29 +51,33 @@ const theme = createMuiTheme({
     },
 });
 
-const App = () => {
-    const [user, setUser] = useState<any | null>(null);
+const App: React.FC = () => {
+    const [user, setUser] = useState<UserType | null>(null);
+    const [room, setRoom] = useState<RoomType | null>(null);
 
     return (
         <UserContext.Provider value={{ user, setUser }}>
-            <ThemeProvider theme={theme}>
-                <CssBaseline />
-                <BrowserRouter>
-                    <TopBar />
-                    <Container maxWidth="sm">
-                        <Switch>
-                            <Route path="/" exact component={HomePage} />
-                            <Route path="/login" component={LoginPage} />
-                            <Route path="/join" component={JoinPage} />
-                            <PrivateRoute
-                                path="/profile"
-                                component={ProfilePage}
-                            />
-                            <Route path="*" component={NotFoundPage} />
-                        </Switch>
-                    </Container>
-                </BrowserRouter>
-            </ThemeProvider>
+            <RoomContext.Provider value={{ room, setRoom }}>
+                <ThemeProvider theme={theme}>
+                    <CssBaseline />
+                    <BrowserRouter>
+                        <TopBar />
+                        <Container maxWidth="sm">
+                            <Switch>
+                                <Route path="/" exact component={HomePage} />
+                                <Route path="/login" component={LoginPage} />
+                                <Route path="/join" component={JoinPage} />
+                                <PrivateRoute
+                                    path="/profile"
+                                    component={ProfilePage}
+                                />
+                                <Route path="/room/:id" component={RoomPage} />
+                                <Route path="*" component={NotFoundPage} />
+                            </Switch>
+                        </Container>
+                    </BrowserRouter>
+                </ThemeProvider>
+            </RoomContext.Provider>
         </UserContext.Provider>
     );
 };
